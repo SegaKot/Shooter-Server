@@ -27,7 +27,7 @@ export class Player extends Schema {
     rX = 0;
 
     @type("number")
-    rY = 0; 1
+    rY = 0;
 }
 
 export class State extends Schema {
@@ -72,6 +72,10 @@ export class StateHandlerRoom extends Room<State> {
             //console.log("StateHandlerRoom received message from", client.sessionId, ":", data);
             this.state.movePlayer(client.sessionId, data);
         });
+
+        this.onMessage("shoot", (client, data) => {
+            this.broadcast("Shoot", data, {except: client});
+        })
     }
 
     onAuth(client, options, req) {
